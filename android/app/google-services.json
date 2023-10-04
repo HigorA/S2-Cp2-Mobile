@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "409460064025",
+    "project_id": "s2cp2-mobile",
+    "storage_bucket": "s2cp2-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409460064025:android:6c901fe37ad9de1644cf88",
+        "android_client_info": {
+          "package_name": "com.cp2mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhOvMfIPm9BsGhjaGIpw54Q8_YQSv7rxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
