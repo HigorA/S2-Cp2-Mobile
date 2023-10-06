@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "962121049730",
+    "project_id": "cp-mobile-527bb",
+    "storage_bucket": "cp-mobile-527bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962121049730:android:83f20254f71d438dd4369b",
+        "android_client_info": {
+          "package_name": "com.cp2mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962121049730-ikmg3cd5rp4ag1m56scb35s8k9umiv0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cp2mobile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu5OFqA3Uw5OcXUzLlM2fnpkeUAt6vA58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
