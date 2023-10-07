@@ -11,7 +11,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     container: {
-        height: 60,
+        height: 99,
         flexDirection: 'row',
         backgroundColor: '#2B2A2A',
         justifyContent: 'flex-start',
@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        color: 'white'
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
     },
 
     profileImage: {

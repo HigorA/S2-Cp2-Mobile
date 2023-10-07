@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Header from "../../components/Header";
 import MessageComponent from "../../components/MessageComponent";
 
-export default function Message() {
+export default function Chat() {
     return (
         <View style={styles.container}>
             <Header />
