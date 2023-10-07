@@ -1,28 +1,17 @@
 {
   "project_info": {
-<<<<<<< HEAD
     "project_number": "962121049730",
     "project_id": "cp-mobile-527bb",
     "storage_bucket": "cp-mobile-527bb.appspot.com"
-=======
-    "project_number": "409460064025",
-    "project_id": "s2cp2-mobile",
-    "storage_bucket": "s2cp2-mobile.appspot.com"
->>>>>>> cbaa12cb533d515123dfa159a6471d798321f683
   },
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
         "mobilesdk_app_id": "1:962121049730:android:83f20254f71d438dd4369b",
-=======
-        "mobilesdk_app_id": "1:409460064025:android:6c901fe37ad9de1644cf88",
->>>>>>> cbaa12cb533d515123dfa159a6471d798321f683
         "android_client_info": {
           "package_name": "com.cp2mobile"
         }
       },
-<<<<<<< HEAD
       "oauth_client": [
         {
           "client_id": "962121049730-ikmg3cd5rp4ag1m56scb35s8k9umiv0e.apps.googleusercontent.com",
@@ -40,26 +29,16 @@
       "api_key": [
         {
           "current_key": "AIzaSyAu5OFqA3Uw5OcXUzLlM2fnpkeUAt6vA58"
-=======
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBhOvMfIPm9BsGhjaGIpw54Q8_YQSv7rxM"
->>>>>>> cbaa12cb533d515123dfa159a6471d798321f683
         }
       ],
       "services": {
         "appinvite_service": {
-<<<<<<< HEAD
           "other_platform_oauth_client": [
             {
               "client_id": "962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-=======
-          "other_platform_oauth_client": []
->>>>>>> cbaa12cb533d515123dfa159a6471d798321f683
         }
       }
     }
