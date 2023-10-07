@@ -19,7 +19,8 @@ import {
 
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import Message from './screens/Message';
+import Chat from './screens/Chat';
+import MessagesSumary from './screens/MessagesSumary';
 
 async function onGoogleButtonPress() {
   // Check if your device supports Google Play
@@ -47,7 +48,7 @@ function App() {
         title="Google"
         onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
       /> */}
-      <Message />
+      <MessagesSumary />
     </SafeAreaView>
   );
 }
