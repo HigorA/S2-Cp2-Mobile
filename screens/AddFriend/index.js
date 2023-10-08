@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View, Pressable, SafeAreaView, TextInput, Button } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable, SafeAreaView, TextInput } from "react-native";
 import Header from "../../components/Header";
 import { rtDatabase } from "../../firebase";
 import { useState, useEffect } from 'react';
@@ -112,12 +112,11 @@ export default function AddFriend() {
                 <Text style={[styles.texto, {alignSelf: 'flex-start'}]}>E-mail do amigo a ser adicionado</Text>
                 <TextInput placeholder="e-mail" placeholderTextColor="#969696" style={styles.input} onChangeText={(email) => setEmail(email)}/>
             </View>
-            {/* <Pressable 
+            <Pressable 
                 style={styles.addButton}
                 onPress={() => SearchFriend(email)}>
                 <Text style={styles.texto}>Adicionar</Text>
-            </Pressable> */}
-            <Button title="Add Friend" onPress={() => SearchFriend(email)}/>
+            </Pressable>
         </SafeAreaView>
     ) 
 }
