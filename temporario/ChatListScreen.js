@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
 import firebase from 'firebase';
 
-class ChatListScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chatList: [],
-    };
-  }
+function ChatListScreen(props) {
+  const [chatList, setChatList] = useState([])
 
-  componentDidMount() {
-    // REFERENCIA DE COLECAO DE CHAT (SE PRECISO)
+  useEffect(() => {
     const chatRef = firebase.firestore().collection('chats');
 
     // CAPTURA MUDANÇAS EM TEMPO REAL
@@ -20,27 +14,25 @@ class ChatListScreen extends Component {
       snapshot.forEach((doc) => {
         chatList.push({ id: doc.id, ...doc.data() });
       });
-      this.setState({ chatList });
+      setChatList(chatList);
     });
-  }
+  }, [])
 
-  render() {
     return (
       <View>
         <Text>Lista de conversas: </Text>
         <FlatList
-          data={this.state.chatList}
+          data={chatList}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Button
               title={`Chat #${item.id}`}
-              onPress={() => this.props.navigation.navigate('Chat', { chatId: item.id })}
+              onPress={() => props.navigation.navigate('Chat', { chatId: item.id })}
             />
           )}
         />
       </View>
     );
-  }
 }
 
 export default ChatListScreen;
