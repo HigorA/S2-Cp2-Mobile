@@ -14,19 +14,21 @@ import {
   Text,
   useColorScheme,
   View,
-  Button
+  Button,
 } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import Chat from './screens/Chat';
 import MessagesSumary from './screens/MessagesSumary';
+import SignUp from './screens/Registro';
+import SignIn from './screens/Login';
 
 async function onGoogleButtonPress() {
   // Check if your device supports Google Play
-  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
   // Get the users ID token
-  const { idToken } = await GoogleSignin.signIn();
+  const {idToken} = await GoogleSignin.signIn();
 
   // Create a Google credential with the token
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -36,19 +38,18 @@ async function onGoogleButtonPress() {
 }
 
 GoogleSignin.configure({
-  webClientId: '962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com',
+  webClientId:
+    '962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com',
 });
 
 function App() {
-
-
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       {/* <Button 
         title="Google"
         onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
       /> */}
-      <MessagesSumary />
+      <SignUp />
     </SafeAreaView>
   );
 }
