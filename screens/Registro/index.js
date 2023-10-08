@@ -1,38 +1,55 @@
 import {firebase} from '@react-native-firebase/auth';
 import {useState} from 'react';
-import {Button, StyleSheet, TextInput, Text, View} from 'react-native';
+import {Button, StyleSheet, TextInput, Text, View, SafeAreaView} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { rtDatabase } from '../../firebase';
 
 export default function SignUp({navigation}) {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
 
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
+  
+  const navigator = useNavigation();
 
-  function handleUserCreation({}) {
+  function handleUserCreation() {
     setErrorMessage(null);
-    if (!username.length || !password.length || !confirmPassword.length)
+    if (!email.length || !password.length || !confirmPassword.length)
       return setErrorMessage('Preencha todos os campos!');
     if (password.length < 6)
       return setErrorMessage('A senha deve ter no mínimo 6 caracteres');
     if (password !== confirmPassword)
       return setErrorMessage('As senhas não coincidem!');
-    if (!username.trim().match(emailRegex))
+    if (!email.trim().match(emailRegex))
       return setErrorMessage('E-mail inválido!');
 
     firebase
       .auth()
-      .createUserWithEmailAndPassword(username, password)
-      .then(() => console.log('Usuário cadastrado'))
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        console.log(data)
+        const user = firebase.auth().currentUser;
+        if (user) {
+          console.log(user)
+          rtDatabase.ref(`/users/${user.uid}`).set({displayName: username, email: user.email})
+        }
+      })
       .catch(error => {
         setErrorMessage(error);
         console.log(error);
-      });
+      }
+    );
+
+    
+
+    navigator.navigate("MessagesSumary")
   }
 
   return (
-    <View style={styles.color}>
+    <SafeAreaView style={styles.color}>
       <View style={styles.container}>
         <View style={styles.titleMessage}>
           <View style={styles.circleContainer}>
@@ -50,12 +67,21 @@ export default function SignUp({navigation}) {
         <View style={styles.containerInputs}>
           <TextInput
             placeholder="Username"
+            placeholderTextColor="#969696"
             style={styles.inputs}
             value={username}
             onChangeText={username => setUsername(username)}
           />
           <TextInput
+            placeholder="Email"
+            placeholderTextColor="#969696"
+            style={styles.inputs}
+            value={email}
+            onChangeText={email => setEmail(email)}
+          />
+          <TextInput
             placeholder="Password"
+            placeholderTextColor="#969696"
             style={styles.inputs}
             value={password}
             secureTextEntry
@@ -63,6 +89,7 @@ export default function SignUp({navigation}) {
           />
           <TextInput
             placeholder="Confirm password"
+            placeholderTextColor="#969696"
             style={styles.inputs}
             secureTextEntry
             value={confirmPassword}
@@ -74,16 +101,16 @@ export default function SignUp({navigation}) {
         <View style={styles.containerButtons}>
           <Button
             title="Register"
-            onPress={handleUserCreation}
+            onPress={() => handleUserCreation()}
             style={styles.registerButton}
           />
         </View>
         <Text style={{marginTop: 20, color: '#ccc'}}>
           Já possui uma conta? Faça o login{' '}
-          <Text style={{textDecorationLine: 'underline'}}>clicando aqui</Text>
+          <Text style={{textDecorationLine: 'underline'}} onPress={() => navigator.navigate("SignIn")}>clicando aqui</Text>
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -128,13 +155,14 @@ const styles = StyleSheet.create({
   },
 
   inputs: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#404040',
     borderRadius: 10,
     maxWidth: 'fit-content',
     display: 'flex',
     gap: 0.5,
     padding: 10,
     alignItems: 'center',
+    color:'white'
   },
 
   registerButton: {
