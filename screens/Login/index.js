@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     gap: 0.5,
     padding: 10,
     alignItems: 'center',
+    color: 'white'
   },
 
   loginButton: {

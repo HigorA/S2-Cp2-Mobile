@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function Friend(prop) {
 
+    console.log(prop.userName)
     return(
         <View style={styles.container}>
             <View style={{width: 45, height: 45, backgroundColor: '#469BCB', borderRadius: 8}} />

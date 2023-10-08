@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View, Pressable, SafeAreaView, TextInput } from "react-native";
+import { Image, StyleSheet, Text, View, Pressable, SafeAreaView, TextInput, Button } from "react-native";
 import Header from "../../components/Header";
 import { rtDatabase } from "../../firebase";
 import { useState, useEffect } from 'react';
@@ -13,13 +13,25 @@ export default function AddFriend() {
     const [data, setData] = useState({});
     const referenceUsers = rtDatabase.ref("/users")
     let friendKey = null;
-    
+    const [user, setUser] = useState({});
+    let userId2 = null;
+
     useEffect(() => {
         const currentUser = auth().currentUser;
         if (currentUser) {
             setUserId(currentUser.uid);
             console.log("teste: " + currentUser.uid);
         }
+
+        userId2 = auth().currentUser.uid;
+        rtDatabase
+            .ref(`/users/${userId2}`)
+            .once('value')
+            .then((snapshot) => {
+                console.log("header 2" + snapshot.val())
+                setUser(snapshot.val())
+            }
+        );
     }, [])
 
     function SearchFriend(emailFriend) {
@@ -67,10 +79,9 @@ export default function AddFriend() {
             })
         })
 
-        const chatReference = rtDatabase.ref("/chat").push();
+        const chatReference = rtDatabase.ref(`/chat/${id}_${friendId}`);
         chatReference.set({
-            userUid1: id,
-            userUid2: friendId,
+            chatId: `${id}_${friendId}`,
         }).then(() => console.log("Chat criado"))
         .catch((error) => console.log(`Erro ao criar o chat ${error}`))
     }
@@ -79,7 +90,6 @@ export default function AddFriend() {
         if (!data) {
             return {}; // Retorna um objeto vazio se data for nulo ou indefinido
         }
-
         // Defina o email que você deseja filtrar
         const targetData = targetEmail;
 
@@ -97,16 +107,17 @@ export default function AddFriend() {
 
     return(
         <SafeAreaView style={styles.container}>
-            <Header renderButton={true}/>
+            <Header name={user.displayName} renderButton={true}/>
             <View style={styles.inputContainer}>
                 <Text style={[styles.texto, {alignSelf: 'flex-start'}]}>E-mail do amigo a ser adicionado</Text>
                 <TextInput placeholder="e-mail" placeholderTextColor="#969696" style={styles.input} onChangeText={(email) => setEmail(email)}/>
             </View>
-            <Pressable 
+            {/* <Pressable 
                 style={styles.addButton}
                 onPress={() => SearchFriend(email)}>
                 <Text style={styles.texto}>Adicionar</Text>
-            </Pressable>
+            </Pressable> */}
+            <Button title="Add Friend" onPress={() => SearchFriend(email)}/>
         </SafeAreaView>
     ) 
 }
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        marginTop: 142,
+        marginTop: 42,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',

@@ -7,15 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Header(prop) {
 
-    let userId = null;
     const navigator = useNavigation();
-    const [user, setUser] = useState({});
     const [renderBackButton, setRenderBackButton] = useState(prop.renderButton) 
+    const [user, setUser] = useState({});
+    let userId = null;
 
     useEffect(() => {
-        userId = firebase.auth().currentUser;
+        userId = firebase.auth().currentUser.uid;
         rtDatabase
-            .ref(`/users/${userId.uid}`)
+            .ref(`/users/${userId}`)
             .once('value')
             .then((snapshot) => {
                 console.log("header" + snapshot.val())
@@ -34,8 +34,13 @@ export default function Header(prop) {
         <View style={styles.container}>
             {renderBackButton == true && <Text style={styles.headerText} onPress={() => navigator.goBack()}>{'<'}</Text>}
             <View style={styles.profileImage}/>
-            <Text style={styles.headerText}>{user.displayName}</Text>
-            <Pressable onPress={() => logOut()}><Text>Log Out</Text></Pressable>
+            <Text style={styles.headerText}>{prop.name}</Text>
+            <Pressable
+                style={{marginLeft: 70}} 
+                onPress={() => logOut()}
+            >
+                <Text style={{color: '#B81C24'}}>Log Out</Text>
+            </Pressable>
         </View>
     )
 }

@@ -51,25 +51,34 @@ export default function MessagesSumary() {
         });
     }, []);
 
+    let userId = null;
+    const [userName, setUserName] = useState();
+
+    useEffect(() => {
+        userId = firebase.auth().currentUser;
+        rtDatabase
+            .ref(`/users/${userId.uid}`)
+            .once('value')
+            .then((snapshot) => {
+                console.log("Display Name aqui")
+                console.log(snapshot.val()["displayName"])
+                setUserName(snapshot.val()["displayName"])
+            }
+        );
+        console.log(userName)
+    }, [])
+
     return (
         <SafeAreaView style={styles.container}>
-            <Header renderButton={false} />
+            <Header name={userName} renderButton={false} />
             <View style={styles.messageContainer}>    
                 <Text style={{color: 'white', fontWeight: '700', fontSize: 16}}>Messages</Text>
-                {/* <FlatList
-                    data={this.state.chatList}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <Button
-                        title={`Chat #${item.id}`}
-                        onPress={() => this.props.navigation.navigate('Chat', { chatId: item.id })}
-                        />
-                        )}
-                    /> */}
                 <View style={{gap: 12, paddingTop: 42}}>
                     {friendList.map((f) => {
                         return (
-                            <Friend key={f["uid"]} userName={f["displayName"]}/>
+                            <Pressable key={f["uid"]} onPress={() => navigator.navigate("Chat", { userName: f["displayName"] , uid: f["uid"], userUid: user.uid })}>
+                                <Friend userName={f["displayName"]}/>
+                            </Pressable>
                         )
                     })}
                 </View>
