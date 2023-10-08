@@ -1,11 +1,29 @@
 import {firebase} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { useNavigation } from '@react-navigation/native';
 import {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, StyleSheet, Text, TextInput, View, SafeAreaView} from 'react-native';
 
 export default function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
+
+  const navigator = useNavigation();
+
+  async function onGoogleButtonPress() {
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    const {idToken} = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    return auth().signInWithCredential(googleCredential);
+  }
+  
+  GoogleSignin.configure({
+    webClientId:
+      '962121049730-fs9ia7r3goi2fj8gb8ur4oge37jn8ovj.apps.googleusercontent.com',
+  });
+
 
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
 
@@ -19,7 +37,11 @@ export default function SignIn() {
     firebase
       .auth()
       .signInWithEmailAndPassword(username, password)
-      .then(() => console.log('Logou'))
+      .then((data) =>{
+          console.log('Logou');
+          navigator.navigate("MessagesSumary")
+        }
+      )
       .catch(error => {
         setErrorMessage(error);
         console.log(error);
@@ -27,7 +49,7 @@ export default function SignIn() {
   }
 
   return (
-    <View style={styles.color}>
+    <SafeAreaView style={styles.color}>
       <View style={styles.container}>
         <View style={styles.titleMessage}>
           <View style={styles.circle}></View>
@@ -63,14 +85,14 @@ export default function SignIn() {
             style={'backgroundColor: #fff'}
             onPress={handleLogin}
           />
-          <Button title="Logar com Google" style={styles.googleButton} />
+          <Button title="Logar com Google" style={styles.googleButton} onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}/>
         </View>
         <Text style={{marginTop: 20, color: '#ccc'}}>
           Ainda não possui uma conta? Cadastre-se{' '}
           <Text style={{textDecorationLine: 'underline'}}>aqui</Text>
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -113,7 +135,7 @@ const styles = StyleSheet.create({
   },
 
   inputs: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#404040',
     borderRadius: 20,
     paddingVertical: 15,
     maxWidth: 'fit-content',

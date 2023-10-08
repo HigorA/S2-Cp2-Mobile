@@ -1,16 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import Header from "../../components/Header";
 import MessageComponent from "../../components/MessageComponent";
 
 export default function Chat() {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Header />
             <View style={styles.messageContainer}>
                 <Text style={{color: 'white'}}>Message Screen</Text>
                 <MessageComponent />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
